@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>호창이 여행매니저 · 디자인 시안 5종</title>
+<style>
+  :root{ font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif; }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;}
+  body{background:#0c0d12;color:#e9eaf0;padding:48px 20px 80px;}
+  .head{max-width:1200px;margin:0 auto 40px;text-align:center;}
+  .head h1{font-size:34px;font-weight:800;letter-spacing:-0.5px;}
+  .head h1 b{color:#FB7A1E;}
+  .head p{margin-top:10px;color:#9aa0ad;font-size:15px;line-height:1.6;}
+  .grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px 28px;}
+  .concept{display:flex;flex-direction:column;align-items:center;}
+  /* ---- phone ---- */
+  .phone{width:290px;height:600px;border-radius:46px;padding:12px;background:#1c1d24;
+    box-shadow:0 30px 60px rgba(0,0,0,.5), inset 0 0 0 2px rgba(255,255,255,.06);}
+  .screen{width:100%;height:100%;border-radius:36px;overflow:hidden;position:relative;
+    display:flex;flex-direction:column;padding:16px 14px;gap:12px;background:var(--bg);color:var(--ink);}
+  .statusbar{display:flex;justify-content:space-between;font-size:11px;color:var(--faint);padding:2px 6px;font-weight:600;}
+  .appbar{display:flex;align-items:center;gap:9px;padding:2px 4px;}
+  .logo{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-size:17px;background:var(--tile);box-shadow:var(--tileShadow);}
+  .brand{font-size:15px;font-weight:700;letter-spacing:-.3px;}
+  .brand b{color:var(--accent);}
+  .hero{margin-top:2px;border-radius:22px;padding:18px;background:var(--hero);color:var(--heroInk);position:relative;overflow:hidden;min-height:150px;box-shadow:var(--soft);}
+  .hero .plane{position:absolute;right:-10px;top:-6px;font-size:90px;opacity:.14;transform:rotate(8deg);}
+  .hero .sub{font-size:11.5px;font-weight:600;opacity:.92;}
+  .hero .title{font-size:21px;font-weight:800;margin-top:6px;letter-spacing:-.4px;line-height:1.25;}
+  .hero .cta{margin-top:16px;display:inline-block;padding:9px 16px;border-radius:14px;font-size:12.5px;font-weight:700;background:var(--accent);color:var(--accentInk);}
+  .section{font-size:13px;font-weight:700;padding:2px 4px;opacity:.95;}
+  .card{display:flex;align-items:center;gap:11px;border-radius:18px;padding:11px 13px;background:var(--card);border:1px solid var(--cardLine);box-shadow:var(--soft);}
+  .card .ci{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:18px;background:var(--chipBg);}
+  .card .ct{flex:1;display:flex;flex-direction:column;gap:2px;}
+  .card .ct b{font-size:13px;font-weight:700;}
+  .card .ct span{font-size:11px;color:var(--faint);}
+  .card .chev{color:var(--faint);font-size:18px;}
+  .nav{margin-top:auto;display:flex;justify-content:space-around;align-items:center;border-radius:20px;padding:11px 6px;background:var(--nav);border:1px solid var(--cardLine);}
+  .nav span{font-size:17px;opacity:.4;filter:grayscale(.3);}
+  .nav .on{opacity:1;filter:none;width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:var(--accent);}
+  /* ---- caption ---- */
+  .cap{width:290px;margin-top:18px;}
+  .cap h3{font-size:17px;font-weight:800;}
+  .cap p{margin-top:5px;font-size:12.5px;line-height:1.55;color:#9aa0ad;}
+  .sw{display:flex;gap:7px;margin-top:11px;}
+  .sw i{width:22px;height:22px;border-radius:7px;display:block;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);}
+
+  /* ===== 1. Aurora Glass ===== */
+  .t1{--bg:radial-gradient(120% 80% at 20% 0%,#23306f 0%,#1a1f52 45%,#2a1c54 100%);
+    --ink:#eef1ff;--faint:rgba(238,241,255,.55);--accent:#7fe6ff;--accentInk:#06283b;
+    --tile:linear-gradient(135deg,#54a4ff,#9b6bff);--tileShadow:0 6px 16px rgba(110,90,255,.5);
+    --hero:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.05));--heroInk:#fff;
+    --card:rgba(255,255,255,.08);--cardLine:rgba(255,255,255,.16);--chipBg:rgba(255,255,255,.12);
+    --nav:rgba(255,255,255,.07);--soft:0 8px 24px rgba(0,0,0,.25);}
+  .t1 .hero{backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.18);}
+  .t1 .card{backdrop-filter:blur(6px);}
+  /* ===== 2. Midnight Gold ===== */
+  .t2{--bg:radial-gradient(120% 90% at 50% -10%,#1b1d24 0%,#0f1115 60%);
+    --ink:#ece8de;--faint:rgba(236,232,222,.45);--accent:#d8b86a;--accentInk:#1a1305;
+    --tile:linear-gradient(135deg,#26262c,#121317);--tileShadow:inset 0 0 0 1px rgba(216,184,106,.5);
+    --hero:linear-gradient(135deg,#191c22,#101218);--heroInk:#ece8de;
+    --card:#15171c;--cardLine:rgba(216,184,106,.35);--chipBg:#101216;
+    --nav:#101216;--soft:0 10px 26px rgba(0,0,0,.5);}
+  .t2 .logo,.t2 .nav .on{box-shadow:inset 0 0 0 1px rgba(216,184,106,.6);}
+  /* ===== 3. Sage & Sand ===== */
+  .t3{--bg:#f4f1e8;--ink:#2c2e29;--faint:#9ca093;--accent:#b08d57;--accentInk:#fff;
+    --tile:linear-gradient(135deg,#7c8c6f,#5e6e56);--tileShadow:0 6px 14px rgba(94,110,86,.4);
+    --hero:#6e7e66;--heroInk:#f6f4ec;
+    --card:#fff;--cardLine:#e7e3d6;--chipBg:#eef0e7;
+    --nav:#fff;--soft:0 10px 22px rgba(70,70,50,.08);}
+  /* ===== 4. Sunset Coral ===== */
+  .t4{--bg:linear-gradient(180deg,#fff5ef,#fde9f1);--ink:#3a2e36;--faint:#b79faa;--accent:#ff6f91;--accentInk:#fff;
+    --tile:linear-gradient(135deg,#ff8a5b,#ff5e87);--tileShadow:0 6px 16px rgba(255,111,145,.45);
+    --hero:linear-gradient(135deg,#ff8a5b,#ff6f91 55%,#c86dd7);--heroInk:#fff;
+    --card:#fff;--cardLine:#f4dcd8;--chipBg:#fff0f3;
+    --nav:#fff;--soft:0 12px 26px rgba(200,109,160,.16);}
+  /* ===== 5. Mono Ink ===== */
+  .t5{--bg:#fafaf8;--ink:#15171a;--faint:#b6b8bc;--accent:#2d5bff;--accentInk:#fff;
+    --tile:linear-gradient(135deg,#15171a,#2a2e34);--tileShadow:0 6px 14px rgba(0,0,0,.25);
+    --hero:#111317;--heroInk:#fff;
+    --card:#fff;--cardLine:#ececea;--chipBg:#f2f3f5;
+    --nav:#fff;--soft:0 10px 22px rgba(0,0,0,.06);}
+</style>
+</head>
+<body>
+  <div class="head">
+    <h1>✈️ <b>호창이</b> 여행매니저 · 디자인 시안</h1>
+    <p>고급스럽고 절제된 방향으로 5가지를 준비했어요. 마음에 드는 번호를 알려주시면 앱·초대장 전체에 적용합니다.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+
+<script>
+const CONCEPTS = [
+  {cls:"t1",name:"1 · Aurora Glass",desc:"딥블루–바이올렛 오로라 위 프로스티드 글래스. 투명감과 깊이로 가장 트렌디하고 고급스러운 무드.",sw:["#1a1f52","#7c5cff","#54a4ff","#7fe6ff"]},
+  {cls:"t2",name:"2 · Midnight Gold",desc:"차콜 블랙 + 샴페인 골드. 미니멀한 라인과 절제된 금장으로 럭셔리·프리미엄 감성.",sw:["#0f1115","#15171c","#d8b86a","#ece8de"]},
+  {cls:"t3",name:"3 · Sage & Sand",desc:"세이지 그린 + 모래빛 크림. 여백과 차분한 톤의 에디토리얼·내추럴 무드.",sw:["#f4f1e8","#6e7e66","#b08d57","#2c2e29"]},
+  {cls:"t4",name:"4 · Sunset Coral",desc:"코랄–피치–라벤더 그라데이션. 설렘과 따뜻함이 느껴지는 모던 프리미엄.",sw:["#ff8a5b","#ff6f91","#c86dd7","#fde9f1"]},
+  {cls:"t5",name:"5 · Mono Ink",desc:"오프화이트 + 잉크 블랙, 코발트 포인트 하나. 타이포 중심의 클린·에디토리얼.",sw:["#fafaf8","#15171a","#2d5bff","#b6b8bc"]},
+];
+const phone = (t)=>`
+  <div class="phone ${t.cls}"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span>● ● ●</span></div>
+    <div class="appbar"><span class="logo">✈️</span><span class="brand"><b>호창이</b> 여행매니저</span></div>
+    <div class="hero"><span class="plane">✈️</span>
+      <div class="sub">오늘도 떠날 준비 되셨나요? 🌤️</div>
+      <div class="title">어디로<br>떠나볼까요?</div>
+      <span class="cta">✨ 일정 자동 생성</span>
+    </div>
+    <div class="section">추천 코스</div>
+    <div class="card"><span class="ci">🍽️</span><div class="ct"><b>강릉 2일 코스</b><span>맛집·숙소 예산 맞춤</span></div><span class="chev">›</span></div>
+    <div class="card"><span class="ci">🏨</span><div class="ct"><b>세인트존스 호텔</b><span>★ 4.5 · 1박</span></div><span class="chev">›</span></div>
+    <div class="nav"><span class="on">🏠</span><span>🗓️</span><span>✨</span><span>🗺️</span><span>💰</span></div>
+  </div></div>`;
+document.getElementById("grid").innerHTML = CONCEPTS.map(t=>`
+  <div class="concept">
+    ${phone(t)}
+    <div class="cap"><h3>${t.name}</h3><p>${t.desc}</p>
+      <div class="sw">${t.sw.map(c=>`<i style="background:${c}"></i>`).join("")}</div>
+    </div>
+  </div>`).join("");
+</script>
+</body>
+</html>
