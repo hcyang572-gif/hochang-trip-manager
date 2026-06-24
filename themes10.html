@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>호창이 여행매니저 — 디자인 시안 10</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============ GALLERY BASE ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gal-bg:#0c0d11;
+  --gal-bg2:#13151c;
+  --gal-card:#16181f;
+  --gal-line:rgba(255,255,255,.07);
+  --gal-text:#e8e9ee;
+  --gal-dim:#8b8e9a;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter','Noto Sans KR',system-ui,sans-serif;
+  background:
+    radial-gradient(1200px 700px at 80% -10%, rgba(99,102,241,.10), transparent 60%),
+    radial-gradient(900px 600px at 0% 100%, rgba(20,184,166,.07), transparent 55%),
+    var(--gal-bg);
+  color:var(--gal-text);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* Header */
+.masthead{padding:120px 24px 56px;max-width:1180px;margin:0 auto}
+.masthead .kicker{
+  font-size:11px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gal-dim);font-weight:600;margin-bottom:30px;
+  display:flex;align-items:center;gap:14px
+}
+.masthead .kicker::after{content:"";height:1px;flex:1;max-width:120px;background:var(--gal-line)}
+.masthead h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(44px,9vw,104px);font-weight:500;letter-spacing:-.035em;
+  line-height:.96;margin-bottom:28px
+}
+.masthead h1 em{font-style:italic;color:#a5b4fc;font-weight:400}
+.masthead p{color:var(--gal-dim);font-size:clamp(15px,2vw,19px);line-height:1.75;font-weight:300;max-width:580px}
+.masthead .pill{
+  display:inline-flex;align-items:center;gap:9px;margin-top:34px;
+  padding:11px 22px;border:1px solid var(--gal-line);border-radius:100px;
+  background:rgba(255,255,255,.03);font-size:13.5px;color:var(--gal-text);font-weight:500
+}
+.masthead .pill b{color:#a5b4fc;font-weight:700}
+
+/* Section */
+.concept{padding:80px 0 70px;border-top:1px solid var(--gal-line)}
+.concept-head{display:flex;align-items:flex-end;gap:28px;margin-bottom:44px;flex-wrap:wrap}
+.cnum{
+  font-family:'Playfair Display',serif;font-size:120px;font-weight:500;line-height:.74;
+  letter-spacing:-.04em;
+  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.04));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  min-width:120px;flex-shrink:0
+}
+.cmeta{flex:1;min-width:260px}
+.cmeta h2{font-family:'Playfair Display',serif;font-size:34px;font-weight:500;letter-spacing:-.02em;margin-bottom:8px}
+.cmeta .tag{font-size:11px;color:var(--gal-dim);font-weight:600;letter-spacing:.28em;text-transform:uppercase;margin-bottom:14px}
+.cmeta p{color:var(--gal-dim);font-size:15.5px;max-width:520px;font-weight:300;line-height:1.7}
+.swatches{display:flex;gap:8px;margin-top:20px}
+.swatches span{width:34px;height:34px;border-radius:11px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+
+/* Stage holding the two phones */
+.stage{
+  display:flex;gap:30px;justify-content:center;align-items:center;flex-wrap:wrap;
+  padding:60px 28px;border-radius:32px;
+  background:
+    radial-gradient(900px 400px at 30% -20%, rgba(255,255,255,.045), transparent 60%),
+    linear-gradient(180deg,#15171e,#0d0e13);
+  border:1px solid var(--gal-line);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 40px 90px -30px rgba(0,0,0,.6);
+  perspective:1600px;
+}
+
+/* ============ FRAMELESS FLOATING SCREEN (thin bezel, modern) ============ */
+.phone{
+  width:294px;height:608px;flex-shrink:0;
+  border-radius:44px;padding:4px;
+  background:linear-gradient(150deg,rgba(255,255,255,.16),rgba(255,255,255,.02) 40%,rgba(0,0,0,.3));
+  box-shadow:
+    0 1px 1px rgba(255,255,255,.22) inset,
+    0 50px 100px -30px rgba(0,0,0,.75),
+    0 18px 50px -20px rgba(0,0,0,.6);
+  position:relative;
+  transition:transform .5s cubic-bezier(.2,.8,.2,1);
+}
+/* slight layered tilt — first phone recedes, second floats forward */
+.phone-col:nth-child(1) .phone{transform:rotateY(8deg) rotateX(2deg) translateZ(-10px)}
+.phone-col:nth-child(2) .phone{transform:rotateY(-7deg) rotateX(2deg) translateZ(20px)}
+.phone-col:hover .phone{transform:rotateY(0) rotateX(0) translateZ(30px) scale(1.015)}
+.screen{
+  width:100%;height:100%;border-radius:40px;overflow:hidden;position:relative;
+  background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.4) inset;
+}
+.scroll{width:100%;height:100%;overflow:hidden;position:relative}
+/* dynamic-island style pill */
+.scroll::before{
+  content:"";position:absolute;top:13px;left:50%;transform:translateX(-50%);
+  width:78px;height:21px;background:rgba(0,0,0,.82);border-radius:20px;z-index:50;
+}
+.caption{
+  text-align:center;font-size:12px;color:var(--gal-dim);margin-top:22px;
+  font-weight:500;letter-spacing:.04em;text-transform:uppercase;font-size:10.5px
+}
+.phone-col{display:flex;flex-direction:column;align-items:center;transform-style:preserve-3d}
+
+/* status bar generic — minimal, modern (clears the island) */
+.sb{display:flex;justify-content:space-between;align-items:center;padding:16px 26px 0;font-size:12.5px;font-weight:600;position:relative;z-index:10}
+.sb span:first-child{min-width:54px}
+.sb .dots{display:flex;gap:5px;align-items:center;font-size:11px;min-width:54px;justify-content:flex-end}
+
+footer{padding:70px 24px 90px;text-align:center;color:var(--gal-dim);font-size:13px;border-top:1px solid var(--gal-line);margin-top:40px}
+footer b{color:var(--gal-text)}
+
+@media(max-width:680px){
+  .phone{transform:scale(.92);margin:-12px 0}
+  .stage{gap:14px;padding:30px 10px}
+}
+
+/* =================================================================
+   THEME-SCOPED STYLES  (each prefixed t1.. t10)
+   ================================================================= */
+
+/* ---------- T1 Aurora Glass ---------- */
+.t1{font-family:'Manrope','Noto Sans KR',sans-serif;color:#fff;
+  background:linear-gradient(155deg,#1e1b4b 0%,#312e81 42%,#5b21b6 100%);}
+.t1 .sb{color:#fff}
+.t1 .glow{position:absolute;border-radius:50%;filter:blur(48px);opacity:.65;z-index:0}
+.t1 .g1{width:200px;height:200px;background:#22d3ee;top:-40px;right:-50px}
+.t1 .g2{width:220px;height:220px;background:#a855f7;bottom:40px;left:-70px}
+.t1 .body{position:relative;z-index:2;padding:26px 22px}
+.t1 .hello{font-size:13px;color:#c7d2fe;font-weight:500}
+.t1 .hello b{color:#fff}
+.t1 h3{font-size:25px;font-weight:800;letter-spacing:-.03em;margin:6px 0 22px;line-height:1.15}
+.t1 .glass{
+  background:rgba(255,255,255,.10);backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.18);border-radius:22px;padding:18px;
+  box-shadow:0 20px 40px -16px rgba(0,0,0,.4);
+}
+.t1 .search{display:flex;align-items:center;gap:10px;border-radius:16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);padding:13px 16px;font-size:13.5px;color:#e0e7ff;margin-bottom:18px}
+.t1 .search .ic{width:16px;height:16px;border:1.6px solid #a5b4fc;border-radius:50%;position:relative;flex-shrink:0}
+.t1 .search .ic::after{content:"";position:absolute;width:7px;height:1.6px;background:#a5b4fc;bottom:-2px;right:-4px;transform:rotate(45deg)}
+.t1 .neon{color:#5eead4}
+.t1 .stat{display:flex;justify-content:space-between;margin-top:14px}
+.t1 .stat .v{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.t1 .stat .v span{font-size:12px;color:#a5b4fc;font-weight:500;display:block;margin-top:2px}
+.t1 .lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#a5b4fc;font-weight:700;margin:22px 2px 12px}
+.t1 .trip{display:flex;gap:13px;align-items:center;margin-top:14px}
+.t1 .trip img{width:54px;height:54px;border-radius:15px;object-fit:cover;flex-shrink:0}
+.t1 .trip .tt{font-size:14.5px;font-weight:700}
+.t1 .trip .ts{font-size:12px;color:#c7d2fe;margin-top:2px}
+.t1 .trip .arr{margin-left:auto;color:#5eead4;font-size:18px}
+/* T1 screen 2 */
+.t1 .hero2{position:relative;height:230px}
+.t1 .hero2 img{width:100%;height:100%;object-fit:cover}
+.t1 .hero2 .scrim{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(30,27,75,.85))}
+.t1 .hero2 .cap{position:absolute;bottom:18px;left:22px;right:22px;z-index:3}
+.t1 .hero2 .cap .city{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.t1 .hero2 .cap .sub{font-size:13px;color:#c7d2fe;margin-top:3px}
+.t1 .reco{padding:20px 22px;position:relative;z-index:2}
+.t1 .rcard{display:flex;gap:13px;align-items:center;border-radius:18px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(14px);padding:13px;margin-bottom:12px}
+.t1 .rcard .badge{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:18px;background:linear-gradient(135deg,#22d3ee,#a855f7);flex-shrink:0}
+.t1 .rcard .rt{font-size:14px;font-weight:700}
+.t1 .rcard .rs{font-size:11.5px;color:#c7d2fe;margin-top:2px}
+.t1 .rcard .sc{margin-left:auto;font-size:13px;font-weight:800;color:#5eead4}
+.t1 .cta{margin-top:6px;text-align:center;border-radius:16px;padding:16px;font-weight:700;font-size:15px;color:#1e1b4b;background:linear-gradient(135deg,#5eead4,#a5b4fc)}
+
+/* ---------- T2 Midnight Gold ---------- */
+.t2{font-family:'Inter','Noto Sans KR',sans-serif;background:#0d0d0f;color:#ece9e2}
+.t2 .sb{color:#9a9690}
+.t2 .body{padding:30px 24px}
+.t2 .gold{color:#d4b46a}
+.t2 .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:30px}
+.t2 .top .lbl{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:#d4b46a;font-weight:600}
+.t2 .top h3{font-family:'Playfair Display',serif;font-size:27px;font-weight:500;margin-top:8px;letter-spacing:-.01em}
+.t2 .av{width:40px;height:40px;border-radius:50%;border:1px solid #d4b46a;object-fit:cover}
+.t2 .hr{height:1px;background:linear-gradient(90deg,#d4b46a,transparent);margin:0 0 4px;opacity:.55}
+.t2 .row{display:flex;align-items:baseline;justify-content:space-between;padding:20px 0;border-bottom:1px solid rgba(212,180,106,.16)}
+.t2 .row .n{font-family:'Playfair Display',serif;font-size:24px;color:#d4b46a;font-weight:500;width:46px}
+.t2 .row .mid{flex:1}
+.t2 .row .mid .rt{font-size:16px;font-weight:600;letter-spacing:-.01em}
+.t2 .row .mid .rs{font-size:12.5px;color:#8a867f;margin-top:3px}
+.t2 .row .arr{color:#d4b46a;font-size:16px}
+.t2 .lead{font-size:13px;color:#9a9690;font-weight:300;line-height:1.7;margin-bottom:26px}
+.t2 .cta{margin-top:32px;border:1px solid #d4b46a;color:#d4b46a;border-radius:2px;text-align:center;padding:15px;font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+/* T2 s2 detail */
+.t2 .hero2{position:relative;height:300px}
+.t2 .hero2 img{width:100%;height:100%;object-fit:cover;filter:saturate(.85) brightness(.9)}
+.t2 .hero2 .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,13,15,.2),rgba(13,13,15,.95))}
+.t2 .hero2 .cap{position:absolute;left:24px;right:24px;bottom:24px}
+.t2 .hero2 .cap .lbl{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:#d4b46a;font-weight:600}
+.t2 .hero2 .cap h3{font-family:'Playfair Display',serif;font-size:30px;font-weight:500;margin-top:8px}
+.t2 .det{padding:24px}
+.t2 .det .line{display:flex;justify-content:space-between;padding:15px 0;border-bottom:1px solid rgba(212,180,106,.14);font-size:13.5px}
+.t2 .det .line .k{color:#8a867f}
+.t2 .det .line .v{font-weight:600}
+.t2 .det .num{font-family:'Playfair Display',serif;font-size:34px;color:#d4b46a;font-weight:500;margin-top:20px;letter-spacing:-.01em}
+.t2 .det .num small{font-size:13px;color:#8a867f;font-family:'Inter',sans-serif}
+
+/* ---------- T3 Editorial Magazine ---------- */
+.t3{font-family:'Inter','Noto Sans KR',sans-serif;background:#f6f2e9;color:#1c1a17}
+.t3 .sb{color:#1c1a17}
+.t3 .body{padding:22px 24px 30px}
+.t3 .masthead-row{display:flex;justify-content:space-between;align-items:center;border-bottom:1.5px solid #1c1a17;padding-bottom:10px;margin-bottom:20px}
+.t3 .masthead-row .ttl{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;letter-spacing:-.01em}
+.t3 .masthead-row .iss{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8a7f6d}
+.t3 .feat{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:#b4632e;font-weight:700;margin-bottom:10px}
+.t3 h3{font-family:'Playfair Display',serif;font-size:33px;font-weight:600;line-height:1.05;letter-spacing:-.02em;margin-bottom:14px}
+.t3 .dek{font-size:13.5px;color:#5a544a;font-weight:300;line-height:1.7;margin-bottom:18px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px}
+.t3 .full{width:calc(100% + 48px);margin-left:-24px;height:200px;object-fit:cover;display:block}
+.t3 .byline{display:flex;justify-content:space-between;font-size:11px;color:#8a7f6d;padding:14px 0 16px;border-bottom:1px solid #d8cfbd;margin-bottom:16px;letter-spacing:.03em}
+.t3 .para{font-size:13px;line-height:1.8;color:#3a352d;font-weight:300}
+.t3 .para .drop{font-family:'Playfair Display',serif;font-size:48px;float:left;line-height:.8;padding:4px 8px 0 0;color:#b4632e;font-weight:600}
+/* s2 list mag */
+.t3 .sect{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;margin-bottom:4px;letter-spacing:-.01em}
+.t3 .sect-sub{font-size:12px;color:#8a7f6d;margin-bottom:20px;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:15px}
+.t3 .art{display:flex;gap:15px;padding:16px 0;border-bottom:1px solid #d8cfbd}
+.t3 .art img{width:78px;height:78px;object-fit:cover;flex-shrink:0}
+.t3 .art .no{font-family:'Playfair Display',serif;font-size:13px;color:#b4632e;font-weight:600}
+.t3 .art .at{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;margin:3px 0 5px;line-height:1.2;letter-spacing:-.01em}
+.t3 .art .as{font-size:11.5px;color:#6a6357;line-height:1.5}
+
+/* ---------- T4 Sunset Coral ---------- */
+.t4{font-family:'Manrope','Noto Sans KR',sans-serif;color:#3d1f33;
+  background:linear-gradient(165deg,#ffd9c0 0%,#ffb1c8 45%,#d8b8ff 100%)}
+.t4 .sb{color:#5a2f4d}
+.t4 .body{padding:24px 22px}
+.t4 .greet{font-size:13px;color:#9c4f6e;font-weight:600}
+.t4 h3{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.1;margin:6px 0 22px;color:#3d1f33}
+.t4 .card{background:rgba(255,255,255,.55);backdrop-filter:blur(14px);border-radius:28px;padding:20px;box-shadow:0 18px 40px -16px rgba(157,79,110,.45);border:1px solid rgba(255,255,255,.7)}
+.t4 .feature{position:relative;border-radius:28px;overflow:hidden;height:200px;box-shadow:0 24px 50px -18px rgba(157,79,110,.55)}
+.t4 .feature img{width:100%;height:100%;object-fit:cover}
+.t4 .feature .ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(61,31,51,.7))}
+.t4 .feature .cap{position:absolute;bottom:18px;left:20px;right:20px;color:#fff}
+.t4 .feature .cap .city{font-size:23px;font-weight:800;letter-spacing:-.02em}
+.t4 .feature .cap .meta{font-size:12.5px;opacity:.9;margin-top:3px}
+.t4 .pills{display:flex;gap:9px;margin:22px 0 8px;flex-wrap:wrap}
+.t4 .pills span{font-size:12.5px;font-weight:600;padding:9px 16px;border-radius:100px;background:rgba(255,255,255,.55);color:#7a3a58}
+.t4 .pills span.on{background:#3d1f33;color:#ffd9c0}
+.t4 .lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9c4f6e;font-weight:700;margin:24px 4px 14px}
+.t4 .mini{display:flex;gap:13px;overflow:hidden}
+.t4 .mini .m{flex:1;background:rgba(255,255,255,.55);border-radius:22px;overflow:hidden;box-shadow:0 12px 28px -14px rgba(157,79,110,.4)}
+.t4 .mini .m img{width:100%;height:88px;object-fit:cover}
+.t4 .mini .m .t{padding:11px 12px;font-size:13px;font-weight:700}
+.t4 .mini .m .t small{display:block;font-weight:500;color:#9c4f6e;font-size:11px;margin-top:2px}
+/* s2 plan */
+.t4 .ph{font-size:30px;font-weight:800;letter-spacing:-.03em;margin-bottom:4px}
+.t4 .psub{font-size:13px;color:#9c4f6e;font-weight:600;margin-bottom:22px}
+.t4 .day{background:rgba(255,255,255,.55);backdrop-filter:blur(14px);border-radius:26px;padding:18px;margin-bottom:14px;box-shadow:0 14px 32px -16px rgba(157,79,110,.4);border:1px solid rgba(255,255,255,.6)}
+.t4 .day .dh{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.t4 .day .dh .d{width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,#ff9eb8,#caa8ff);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px}
+.t4 .day .dh .dt{font-size:15px;font-weight:800}
+.t4 .day .dh .dt small{display:block;font-weight:500;color:#9c4f6e;font-size:11.5px;margin-top:1px}
+.t4 .step{display:flex;gap:12px;align-items:center;padding:9px 0;font-size:13.5px}
+.t4 .step .tm{font-size:11.5px;font-weight:700;color:#9c4f6e;width:42px;flex-shrink:0}
+.t4 .step .nm{font-weight:600}
+
+/* ---------- T5 Mono Ink ---------- */
+.t5{font-family:'Inter','Noto Sans KR',sans-serif;background:#faf9f6;color:#0f0f0f}
+.t5 .sb{color:#0f0f0f}
+.t5 .body{padding:26px 26px}
+.t5 .cobalt{color:#1d4ed8}
+.t5 .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#1d4ed8;font-weight:700;margin-bottom:18px}
+.t5 h3{font-size:38px;font-weight:800;letter-spacing:-.045em;line-height:.98;margin-bottom:30px}
+.t5 h3 .thin{font-weight:300;color:#9a9a9a}
+.t5 .divline{height:1px;background:#0f0f0f;margin:0}
+.t5 .item{padding:22px 0;border-bottom:1px solid #e3e1da;display:flex;align-items:baseline;gap:16px}
+.t5 .item .idx{font-size:12px;font-weight:700;color:#1d4ed8;width:24px;flex-shrink:0}
+.t5 .item .ti{font-size:19px;font-weight:700;letter-spacing:-.02em}
+.t5 .item .si{font-size:13px;color:#7a7a7a;margin-top:4px;font-weight:400}
+.t5 .item .meta{margin-left:auto;font-size:13px;font-weight:700;text-align:right;white-space:nowrap}
+.t5 .item .meta small{display:block;color:#9a9a9a;font-weight:400;font-size:11px;margin-top:2px}
+.t5 .note{font-size:13px;color:#7a7a7a;line-height:1.7;font-weight:300;margin-top:26px}
+.t5 .note b{color:#0f0f0f;font-weight:600}
+/* s2 single big */
+.t5 .bignum{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#1d4ed8;font-weight:700;margin-bottom:14px}
+.t5 .display{font-size:62px;font-weight:800;letter-spacing:-.05em;line-height:.9;margin-bottom:6px}
+.t5 .display small{font-size:18px;color:#9a9a9a;font-weight:400}
+.t5 .subd{font-size:14px;color:#7a7a7a;margin-bottom:34px;font-weight:300}
+.t5 .kv{display:flex;justify-content:space-between;padding:18px 0;border-bottom:1px solid #e3e1da}
+.t5 .kv .k{font-size:13px;color:#9a9a9a;font-weight:400}
+.t5 .kv .v{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.t5 .kv .v.blue{color:#1d4ed8}
+.t5 .ctaline{margin-top:34px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:700;color:#1d4ed8}
+.t5 .ctaline .ar{font-size:20px}
+
+/* ---------- T6 Bento Grid ---------- */
+.t6{font-family:'Manrope','Noto Sans KR',sans-serif;background:#eef0f3;color:#16181d}
+.t6 .sb{color:#16181d}
+.t6 .body{padding:20px 18px}
+.t6 .topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding:0 4px}
+.t6 .topline .h{font-size:21px;font-weight:800;letter-spacing:-.02em}
+.t6 .topline .h small{display:block;font-size:12px;font-weight:500;color:#8a8f99;margin-top:1px}
+.t6 .topline .av{width:38px;height:38px;border-radius:13px;object-fit:cover}
+.t6 .grid{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:78px;gap:11px}
+.t6 .tile{border-radius:22px;padding:16px;position:relative;overflow:hidden;box-shadow:0 10px 24px -16px rgba(22,24,29,.3)}
+.t6 .tile.span2{grid-column:span 2}
+.t6 .tile.row2{grid-row:span 2}
+.t6 .tile.dark{background:#16181d;color:#fff}
+.t6 .tile.white{background:#fff}
+.t6 .tile.blue{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
+.t6 .tile.img{padding:0}
+.t6 .tile.img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.t6 .tile.img .lab{position:absolute;left:14px;bottom:12px;color:#fff;font-weight:800;font-size:15px;letter-spacing:-.01em;z-index:2;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.t6 .tile.img .ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.55))}
+.t6 .tile .kpi{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.t6 .tile .cap{font-size:11.5px;font-weight:600;opacity:.7;margin-top:auto}
+.t6 .tile .lab-s{font-size:12px;font-weight:700;margin-bottom:8px}
+.t6 .tile-flex{display:flex;flex-direction:column;height:100%}
+.t6 .tile .big{font-size:18px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+/* s2 detail bento */
+.t6 .det-big{border-radius:24px;overflow:hidden;position:relative;height:180px;margin-bottom:11px;box-shadow:0 14px 30px -16px rgba(22,24,29,.4)}
+.t6 .det-big img{width:100%;height:100%;object-fit:cover}
+.t6 .det-big .ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.6))}
+.t6 .det-big .cap{position:absolute;left:18px;bottom:16px;color:#fff;z-index:2}
+.t6 .det-big .cap .c{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.t6 .det-big .cap .s{font-size:12px;opacity:.9;margin-top:2px}
+
+/* ---------- T7 Immersive Cinematic ---------- */
+.t7{font-family:'Manrope','Noto Sans KR',sans-serif;background:#000;color:#fff;position:relative}
+.t7 .bg{position:absolute;inset:0;z-index:0}
+.t7 .bg img{width:100%;height:100%;object-fit:cover}
+.t7 .bg .grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,transparent 30%,transparent 45%,rgba(0,0,0,.95))}
+.t7 .sb{color:#fff;position:relative;z-index:5}
+.t7 .top-cap{position:relative;z-index:5;padding:30px 26px 0}
+.t7 .top-cap .loc{font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;opacity:.85;display:flex;align-items:center;gap:8px}
+.t7 .top-cap .loc::before{content:"";width:6px;height:6px;border-radius:50%;background:#5eead4;box-shadow:0 0 10px #5eead4}
+.t7 .top-cap h3{font-family:'Playfair Display',serif;font-size:46px;font-weight:500;letter-spacing:-.02em;line-height:.98;margin-top:14px}
+.t7 .sheet{position:absolute;bottom:0;left:0;right:0;z-index:5;
+  background:rgba(20,20,22,.55);backdrop-filter:blur(26px);
+  border-top:1px solid rgba(255,255,255,.16);
+  border-radius:34px 34px 0 0;padding:24px 24px 30px}
+.t7 .sheet .grip{width:38px;height:4px;border-radius:4px;background:rgba(255,255,255,.4);margin:0 auto 20px}
+.t7 .sheet .lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#5eead4;font-weight:700;margin-bottom:16px}
+.t7 .sheet .row{display:flex;gap:14px;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.t7 .sheet .row:last-of-type{border-bottom:none}
+.t7 .sheet .row img{width:48px;height:48px;border-radius:14px;object-fit:cover;flex-shrink:0}
+.t7 .sheet .row .rt{font-size:14.5px;font-weight:700}
+.t7 .sheet .row .rs{font-size:12px;opacity:.7;margin-top:2px}
+.t7 .sheet .row .sc{margin-left:auto;font-size:13px;font-weight:800;color:#5eead4}
+.t7 .sheet .cta{margin-top:18px;text-align:center;background:#fff;color:#000;border-radius:100px;padding:15px;font-weight:800;font-size:14.5px}
+/* s2 fullscreen map-ish */
+.t7 .stats{position:absolute;bottom:0;left:0;right:0;z-index:5;padding:26px 26px 32px;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.85))}
+.t7 .stats .grid3{display:flex;gap:0;border-top:1px solid rgba(255,255,255,.18);padding-top:18px}
+.t7 .stats .grid3 .s{flex:1;text-align:center}
+.t7 .stats .grid3 .s .v{font-family:'Playfair Display',serif;font-size:30px;font-weight:500}
+.t7 .stats .grid3 .s .k{font-size:11px;opacity:.7;letter-spacing:.08em;margin-top:3px}
+.t7 .stats .q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.4;margin-bottom:22px;opacity:.95}
+
+/* ---------- T8 Nature Sage ---------- */
+.t8{font-family:'Manrope','Noto Sans KR',sans-serif;background:#eef0e6;color:#2c322a}
+.t8 .sb{color:#4a5444}
+.t8 .body{padding:26px 24px}
+.t8 .greet{font-size:13px;color:#7c8473;font-weight:600}
+.t8 h3{font-family:'Playfair Display',serif;font-size:30px;font-weight:500;letter-spacing:-.01em;line-height:1.1;margin:6px 0 24px;color:#2c322a}
+.t8 .feature{position:relative;border-radius:30px;overflow:hidden;height:220px;box-shadow:0 22px 44px -20px rgba(74,84,68,.5)}
+.t8 .feature img{width:100%;height:100%;object-fit:cover}
+.t8 .feature .ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(44,50,42,.75))}
+.t8 .feature .cap{position:absolute;left:22px;right:22px;bottom:20px;color:#f3f1e6}
+.t8 .feature .cap .badge{display:inline-block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;background:rgba(243,241,230,.25);padding:5px 11px;border-radius:100px;font-weight:600;margin-bottom:10px;backdrop-filter:blur(6px)}
+.t8 .feature .cap .city{font-family:'Playfair Display',serif;font-size:26px;font-weight:500}
+.t8 .feature .cap .meta{font-size:12.5px;opacity:.9;margin-top:3px}
+.t8 .lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7c8473;font-weight:700;margin:26px 2px 16px}
+.t8 .leaf{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #d6dac9}
+.t8 .leaf:last-child{border-bottom:none}
+.t8 .leaf .dot{width:40px;height:40px;border-radius:50%;background:#cdd6bf;color:#4a5444;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.t8 .leaf .lt{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.t8 .leaf .ls{font-size:12px;color:#7c8473;margin-top:2px}
+.t8 .leaf .ar{margin-left:auto;color:#9aa28d;font-size:16px}
+/* s2 journal */
+.t8 .jhead{font-family:'Playfair Display',serif;font-size:27px;font-weight:500;margin-bottom:4px}
+.t8 .jsub{font-size:12.5px;color:#7c8473;font-weight:600;margin-bottom:22px}
+.t8 .entry{margin-bottom:20px}
+.t8 .entry .date{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9aa28d;font-weight:700;margin-bottom:8px}
+.t8 .entry img{width:100%;height:140px;object-fit:cover;border-radius:22px;margin-bottom:12px;box-shadow:0 14px 30px -18px rgba(74,84,68,.5)}
+.t8 .entry .txt{font-family:'Noto Serif KR',serif;font-size:13.5px;line-height:1.8;color:#4a5444;font-weight:300}
+.t8 .entry .txt b{font-weight:600;color:#2c322a}
+
+/* ---------- T9 Ocean Breeze ---------- */
+.t9{font-family:'Manrope','Noto Sans KR',sans-serif;background:linear-gradient(180deg,#e8f6f5 0%,#f4f0e6 100%);color:#143d3a}
+.t9 .sb{color:#0d6e68}
+.t9 .body{padding:24px 22px}
+.t9 .greet{font-size:13px;color:#0d8a82;font-weight:600}
+.t9 h3{font-size:29px;font-weight:800;letter-spacing:-.03em;line-height:1.12;margin:6px 0 22px;color:#143d3a}
+.t9 .search{display:flex;align-items:center;gap:11px;background:#fff;border-radius:18px;padding:14px 16px;font-size:13.5px;color:#5a7a76;box-shadow:0 12px 28px -16px rgba(13,110,104,.35);margin-bottom:24px}
+.t9 .search .ic{width:15px;height:15px;border:1.8px solid #14b8a6;border-radius:50%;position:relative;flex-shrink:0}
+.t9 .search .ic::after{content:"";position:absolute;width:6px;height:1.8px;background:#14b8a6;bottom:-2px;right:-3px;transform:rotate(45deg)}
+.t9 .scroller{display:flex;gap:14px;overflow:hidden;margin:0 -22px;padding:0 22px}
+.t9 .dest{flex-shrink:0;width:150px}
+.t9 .dest img{width:150px;height:190px;object-fit:cover;border-radius:24px;box-shadow:0 18px 36px -18px rgba(13,110,104,.45)}
+.t9 .dest .dt{font-size:15px;font-weight:800;margin-top:11px;letter-spacing:-.01em}
+.t9 .dest .ds{font-size:12px;color:#0d8a82;font-weight:600;margin-top:1px}
+.t9 .lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#0d8a82;font-weight:700;margin:26px 2px 14px}
+.t9 .wide{background:#fff;border-radius:24px;overflow:hidden;display:flex;box-shadow:0 14px 30px -18px rgba(13,110,104,.35)}
+.t9 .wide img{width:108px;height:108px;object-fit:cover;flex-shrink:0}
+.t9 .wide .wt{padding:16px 16px;flex:1}
+.t9 .wide .wt .n{font-size:15.5px;font-weight:800;letter-spacing:-.01em}
+.t9 .wide .wt .s{font-size:12.5px;color:#5a7a76;margin-top:4px;line-height:1.5}
+.t9 .wide .wt .tag{display:inline-block;margin-top:9px;font-size:11px;font-weight:700;color:#0d8a82;background:#d6f0ed;padding:4px 11px;border-radius:100px}
+/* s2 weather/detail */
+.t9 .wcard{background:linear-gradient(150deg,#14b8a6,#0891b2);border-radius:28px;padding:24px;color:#fff;box-shadow:0 22px 44px -18px rgba(13,110,104,.55);margin-bottom:22px}
+.t9 .wcard .loc{font-size:14px;font-weight:700;opacity:.95}
+.t9 .wcard .temp{font-size:58px;font-weight:300;letter-spacing:-.04em;line-height:1;margin:8px 0 4px}
+.t9 .wcard .cond{font-size:13.5px;opacity:.9}
+.t9 .wcard .days{display:flex;justify-content:space-between;margin-top:22px;border-top:1px solid rgba(255,255,255,.25);padding-top:18px}
+.t9 .wcard .days .d{text-align:center}
+.t9 .wcard .days .d .dn{font-size:11px;opacity:.85}
+.t9 .wcard .days .d .ic{font-size:18px;margin:7px 0}
+.t9 .wcard .days .d .dt{font-size:13px;font-weight:700}
+.t9 .tip{display:flex;gap:13px;align-items:center;background:#fff;border-radius:20px;padding:15px;margin-bottom:12px;box-shadow:0 12px 26px -18px rgba(13,110,104,.3)}
+.t9 .tip .e{width:42px;height:42px;border-radius:13px;background:#d6f0ed;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.t9 .tip .tt{font-size:14px;font-weight:700}
+.t9 .tip .ts{font-size:12px;color:#5a7a76;margin-top:2px}
+
+/* ---------- T10 Terracotta Boho ---------- */
+.t10{font-family:'Manrope','Noto Sans KR',sans-serif;background:#f3e6d6;color:#3a2418}
+.t10 .sb{color:#7a4a32}
+.t10 .body{padding:26px 24px}
+.t10 .greet{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#b06a45;font-weight:700}
+.t10 h3{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:600;letter-spacing:-.01em;line-height:1.02;margin:8px 0 24px;color:#3a2418}
+.t10 .arch{position:relative;height:240px;border-radius:140px 140px 26px 26px;overflow:hidden;box-shadow:0 24px 48px -20px rgba(122,74,50,.5)}
+.t10 .arch img{width:100%;height:100%;object-fit:cover}
+.t10 .arch .ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(58,36,24,.6))}
+.t10 .arch .cap{position:absolute;left:24px;right:24px;bottom:22px;color:#f3e6d6;text-align:center}
+.t10 .arch .cap .city{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600}
+.t10 .arch .cap .meta{font-size:12px;opacity:.9;letter-spacing:.05em;margin-top:2px}
+.t10 .lbl{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#b06a45;font-weight:700;margin:28px 2px 16px;text-align:center}
+.t10 .row{display:flex;align-items:center;gap:15px;padding:15px 0;border-bottom:1px dashed #d0b59a}
+.t10 .row:last-child{border-bottom:none}
+.t10 .row .ico{width:46px;height:46px;border-radius:14px;background:#e3c8ad;color:#a85a38;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.t10 .row .rt{font-size:15.5px;font-weight:700;letter-spacing:-.01em}
+.t10 .row .rs{font-size:12px;color:#9c7858;margin-top:2px}
+.t10 .row .ar{margin-left:auto;color:#b06a45}
+/* s2 gallery boho */
+.t10 .ghead{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;text-align:center;margin-bottom:4px}
+.t10 .gsub{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#b06a45;font-weight:700;text-align:center;margin-bottom:24px}
+.t10 .gal{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.t10 .gal img{width:100%;object-fit:cover;border-radius:18px}
+.t10 .gal .tall{grid-row:span 2;height:100%;min-height:212px}
+.t10 .gal .sq{height:100px}
+.t10 .qbox{margin-top:24px;text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;line-height:1.5;color:#7a4a32;padding:0 8px}
+
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="kicker">Design Exploration · 2026</div>
+  <h1>호창이 여행매니저<br><em>디자인 시안 열 가지</em></h1>
+  <p>색뿐 아니라 레이아웃 구조까지 확연히 다른 10가지 프리미엄 방향을, 각 시안마다 두 화면의 폰 목업으로 보여드립니다.</p>
+  <div class="pill">마음에 드는 <b>번호</b>를 고르세요 · 총 <b>20</b>개 화면</div>
+</header>
+
+<main class="wrap">
+
+<!-- ============ 01 AURORA GLASS ============ -->
+<section class="concept">
+  <div class="concept-head">
+    <div class="cnum">01</div>
+    <div class="cmeta">
+      <div class="tag">Aurora Glass</div>
+      <h2>오로라 글래스</h2>
+      <p>인디고에서 바이올렛으로 흐르는 그라데이션 위에 프로스티드 글래스 카드를 얹고, 시안 네온으로 포인트를 줍니다.</p>
+      <div class="swatches"><span style="background:#312e81"></span><span style="background:#5b21b6"></span><span style="background:#22d3ee"></span><span style="background:#a5b4fc"></span></div>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t1">
+        <div class="glow g1"></div><div class="glow g2"></div>
+        <div class="sb"><span>9:41</span><span class="dots"><i></i><i></i><i></i></span></div>
+        <div class="body">
+          <div class="hello">안녕하세요, <b>호창</b>님</div>
+          <h3>오늘은 어디로<br>떠나볼까요?</h3>
+          <div class="search"><span class="ic"></span>도시·테마로 여행 검색</div>
+          <div class="glass">
+            <div class="lbl" style="margin:0 0 6px">다가오는 여행</div>
+            <div style="font-size:18px;font-weight:800;letter-spacing:-.02em">강릉 2박 3일</div>
+            <div class="stat">
+              <div class="v">7<span>일 남음</span></div>
+              <div class="v">12<span>일정</span></div>
+              <div class="v">5<span>맛집</span></div>
+            </div>
+          </div>
+          <div class="lbl">AI 추천 코스</div>
+          <div class="trip">
+            <img src="https://images.unsplash.com/photo-1538485399081-7191377e8241?auto=format&fit=crop&w=200&q=70" alt="제주">
+            <div><div class="tt">제주 감성 드라이브</div><div class="ts">3일 · 해안도로 + 카페</div></div>
+            <span class="arr">›</span>
+          </div>
+          <div class="trip">
+            <img src="https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?auto=format&fit=crop&w=200&q=70" alt="부산">
+            <div><div class="tt">부산 미식 위크엔드</div><div class="ts">2일 · 해운대 + 야경</div></div>
+            <span class="arr">›</span>
+          </div>
+        </div>
+      </div></div></div>
+      <div class="caption">① 홈 · 글래스 대시보드</div>
+    </div>
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t1">
+        <div class="hero2">
+          <img src="https://images.unsplash.com/photo-1538485399081-7191377e8241?auto=format&fit=crop&w=700&q=70" alt="제주">
+          <div class="scrim"></div>
+          <div class="sb" style="color:#fff;position:absolute;top:0;left:0;right:0"><span>9:41</span><span class="dots"><i></i><i></i><i></i></span></div>
+          <div class="cap"><div class="city">제주 감성 드라이브</div><div class="sub">AI가 만든 3일 코스 · 일정 자동 생성</div></div>
+        </div>
+        <div class="reco">
+          <div class="lbl" style="margin:0 0 12px">오늘의 추천</div>
+          <div class="rcard"><div class="badge">🍜</div><div><div class="rt">올레국수</div><div class="rs">고기국수 · 도보 4분</div></div><span class="sc">4.8</span></div>
+          <div class="rcard"><div class="badge">☕</div><div><div class="rt">월정리 카페</div><div class="rs">오션뷰 · 해안도로</div></div><span class="sc">4.7</span></div>
+          <div class="rcard"><div class="badge">🌅</div><div><div class="rt">성산일출봉</div><div class="rs">일출 명소 · 차로 12분</div></div><span class="sc">4.9</span></div>
+          <div class="cta">이 코스로 일정 만들기</div>
+        </div>
+      </div></div></div>
+      <div class="caption">② 추천결과 · 시네마틱 글래스</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 MIDNIGHT GOLD ============ -->
+<section class="concept">
+  <div class="concept-head">
+    <div class="cnum">02</div>
+    <div class="cmeta">
+      <div class="tag">Midnight Gold</div>
+      <h2>미드나잇 골드</h2>
+      <p>차콜 블랙 위에 샴페인 골드 헤어라인. 카드 대신 얇은 구분선과 세리프 숫자로 위계를 만드는 미니멀 리스트.</p>
+      <div class="swatches"><span style="background:#0d0d0f"></span><span style="background:#d4b46a"></span><span style="background:#ece9e2"></span><span style="background:#8a867f"></span></div>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t2">
+        <div class="sb"><span>9:41</span><span class="dots"><i></i><i></i><i></i></span></div>
+        <div class="body">
+          <div class="top">
+            <div><div class="lbl">호창이 여행매니저</div><h3>나의 여정</h3></div>
+            <img class="av" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=70" alt="프로필">
+          </div>
+          <div class="hr"></div>
+          <div class="row"><div class="n">01</div><div class="mid"><div class="rt">강릉 · 바다와 커피</div><div class="rs">06.28 – 06.30 · 2박 3일</div></div><span class="arr">→</span></div>
+          <div class="row"><div class="n">02</div><div class="mid"><div class="rt">제주 · 감성 드라이브</div><div class="rs">07.14 – 07.16 · 2박 3일</div></div><span class="arr">→</span></div>
+          <div class="row"><div class="n">03</div><div class="mid"><div class="rt">부산 · 미식 위크엔드</div><div class="rs">08.09 – 08.10 · 1박 2일</div></div><span class="arr">→</span></div>
+          <div class="cta">새 여행 자동 생성</div>
+        </div>
+      </div></div></div>
+      <div class="caption">① 여행 목록 · 세리프 인덱스</div>
+    </div>
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t2">
+        <div class="hero2">
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=700&q=70" alt="강릉 바다">
+          <div class="scrim"></div>
+          <div class="sb" style="color:#fff;position:absolute;top:0;left:0;right:0"><span>9:41</span><span class="dots"><i></i><i></i><i></i></span></div>
+          <div class="cap"><div class="lbl">06.28 – 06.30</div><h3>강릉, 바다와 커피</h3></div>
+        </div>
+        <div class="det">
+          <div class="line"><span class="k">숙소</span><span class="v">세인트존스 호텔</span></div>
+          <div class="line"><span class="k">날씨</span><span class="v">맑음 · 24°</span></div>
+          <div class="line"><span class="k">맛집</span><span class="v gold">5곳 예약 완료</span></div>
+          <div class="line"><span class="k">이동</span><span class="v">KTX · 1시간 58분</span></div>
+          <div class="num">12<small> / 자동 생성된 일정</small></div>
+          <div class="cta">전체 일정 보기</div>
+        </div>
+      </div></div></div>
+      <div class="caption">② 여행 상세 · 헤어라인 정보</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 EDITORIAL MAGAZINE ============ -->
+<section class="concept">
+  <div class="concept-head">
+    <div class="cnum">03</div>
+    <div class="cmeta">
+      <div class="tag">Editorial Magazine</div>
+      <h2>에디토리얼 매거진</h2>
+      <p>크림 배경에 대형 세리프 헤드라인, 풀블리드 사진, 얇은 구분선. 여행지를 잡지 기사처럼 읽게 만드는 구성.</p>
+      <div class="swatches"><span style="background:#f6f2e9"></span><span style="background:#1c1a17"></span><span style="background:#b4632e"></span><span style="background:#d8cfbd"></span></div>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t3">
+        <div class="sb"><span>9:41</span><span class="dots"><i></i><i></i><i></i></span></div>
+        <div class="body">
+          <div class="masthead-row"><div class="ttl">호창 트래블</div><div class="iss">No.06 · 여름호</div></div>
+          <div class="feat">이달의 여행지</div>
+          <h3>강릉, 파도가<br>건네는 안부</h3>
+          <div class="dek">바다 한 잔과 커피 한 잔 사이, 도시가 잊게 한 속도를 되찾는 사흘.</div>
+        </div>
+        <img class="full" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=70" alt="해변">
+        <div class="body" style="padding-top:0">
+          <div class="byline"><span>글·사진 호창이 여행매니저</span><span>읽기 4분</span></div>
+          <div class="para"><span class="drop">새</span>벽의 안목해변은 커피거리의 향으로 깨어난다. 호창이 여행매니저는 당신의 취향을 읽어 사흘의 동선을 한 편의 기사처럼 엮어둔다. 첫날은 바다, 둘째날은 골목.</div>
+        </div>
+      </div></div></div>
+      <div class="caption">① 피처 기사형 홈</div>
+    </div>
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t3">
+        <div class="sb"><span>9:41</span><span class="dots"><i></i><i></i><i></i></span></div>
+        <div class="body">
+          <div class="masthead-row"><div class="ttl">추천 코스</div><div class="iss">큐레이션</div></div>
+          <div class="sect">사흘간의 동선</div>
+          <div class="sect-sub">에디터가 고른 강릉의 장면들</div>
+          <div class="art"><img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=200&q=70" alt="커피"><div><div class="no">01 · 아침</div><div class="at">안목 커피거리</div><div class="as">파도 소리와 첫 잔. 도보 5분의 로스터리들.</div></div></div>
+          <div class="art"><img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=200&q=70" alt="점심"><div><div class="no">02 · 점심</div><div class="at">초당 순두부</div><div class="as">70년 손맛, 바다 옆 식탁에서.</div></div></div>
+          <div class="art" style="border-bottom:none"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=200&q=70" alt="저녁"><div><div class="no">03 · 노을</div><div class="at">경포 호수 산책</div><div class="as">해질녘 호수를 한 바퀴, 하루의 마침표.</div></div></div>
+        </div>
+      </div></div></div>
+      <div class="caption">② 큐레이션 · 기사 리스트</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 SUNSET CORAL ============ -->
+<section class="concept">
+  <div class="concept-head">
+    <div class="cnum">04</div>
+    <div class="cmeta">
+      <div class="tag">Sunset Coral</div>
+      <h2>선셋 코랄</h2>
+      <p>코랄에서 핑크, 라벤더로 번지는 노을 그라데이션. 크게 둥근 글래스 카드와 말랑한 곡선으로 다정한 감성을 냅니다.</p>
+      <div class="swatches"><span style="background:#ffd9c0"></span><span style="background:#ffb1c8"></span><span style="background:#d8b8ff"></span><span style="background:#3d1f33"></span></div>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t4">
+        <div class="sb"><span>9:41</span><span class="dots">●●●</span></div>
+        <div class="body">
+          <div class="greet">좋은 아침이에요, 호창님 ☀️</div>
+          <h3>이번 주말,<br>노을 보러 갈래요?</h3>
+          <div class="feature">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=70" alt="해변 노을">
+            <div class="ov"></div>
+            <div class="cap"><div class="city">제주 협재 해변</div><div class="meta">석양 명소 · AI 추천 1순위</div></div>
+          </div>
+          <div class="pills"><span class="on">전체</span><span>바다</span><span>카페</span><span>맛집</span></div>
+          <div class="lbl">가까운 인기 코스</div>
+          <div class="mini">
+            <div class="m"><img src="https://images.unsplash.com/photo-1538485399081-7191377e8241?auto=format&fit=crop&w=300&q=70" alt="제주"><div class="t">우도 한 바퀴<small>3시간 · 자전거</small></div></div>
+            <div class="m"><img src="https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?auto=format&fit=crop&w=300&q=70" alt="부산"><div class="t">감천문화마을<small>반나절 · 도보</small></div></div>
+          </div>
+        </div>
+      </div></div></div>
+      <div class="caption">① 홈 · 노을 글래스</div>
+    </div>
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t4">
+        <div class="sb"><span>9:41</span><span class="dots">●●●</span></div>
+        <div class="body">
+          <div class="ph">제주 2박 3일</div>
+          <div class="psub">AI가 자동 생성한 일정 · 12개 코스</div>
+          <div class="day">
+            <div class="dh"><div class="d">D1</div><div class="dt">서쪽 바다<small>협재 · 한림 · 애월</small></div></div>
+            <div class="step"><span class="tm">10:00</span><span class="nm">협재 해변 산책</span></div>
+            <div class="step"><span class="tm">12:30</span><span class="nm">한림 흑돼지 점심</span></div>
+            <div class="step"><span class="tm">16:00</span><span class="nm">애월 오션뷰 카페</span></div>
+          </div>
+          <div class="day">
+            <div class="dh"><div class="d">D2</div><div class="dt">동쪽 일출<small>성산 · 우도</small></div></div>
+            <div class="step"><span class="tm">06:00</span><span class="nm">성산일출봉 일출</span></div>
+            <div class="step"><span class="tm">11:00</span><span class="nm">우도 해안 드라이브</span></div>
+          </div>
+        </div>
+      </div></div></div>
+      <div class="caption">② 일정 · 데일리 타임라인</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 MONO INK ============ -->
+<section class="concept">
+  <div class="concept-head">
+    <div class="cnum">05</div>
+    <div class="cmeta">
+      <div class="tag">Mono Ink</div>
+      <h2>모노 잉크</h2>
+      <p>오프화이트와 잉크 블랙, 단 하나의 코발트 포인트. 카드 없이 큰 타이포와 구분선만으로 위계를 세우는 절제된 구성.</p>
+      <div class="swatches"><span style="background:#faf9f6"></span><span style="background:#0f0f0f"></span><span style="background:#1d4ed8"></span><span style="background:#e3e1da"></span></div>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t5">
+        <div class="sb"><span>9:41</span><span class="dots">●●●</span></div>
+        <div class="body">
+          <div class="eyebrow">호창이 여행매니저</div>
+          <h3>다음 여정,<br><span class="thin">세 가지</span></h3>
+          <div class="divline"></div>
+          <div class="item"><span class="idx">01</span><div><div class="ti">강릉</div><div class="si">바다와 커피 · 2박 3일</div></div><span class="meta">06.28<small>7일 남음</small></span></div>
+          <div class="item"><span class="idx">02</span><div><div class="ti">제주</div><div class="si">감성 드라이브 · 2박 3일</div></div><span class="meta">07.14<small>예약 완료</small></span></div>
+          <div class="item"><span class="idx">03</span><div><div class="ti">부산</div><div class="si">미식 위크엔드 · 1박 2일</div></div><span class="meta">08.09<small>계획 중</small></span></div>
+          <div class="note">취향만 알려주세요. 일정은 <b>자동으로 생성</b>됩니다. 군더더기 없이, 핵심 동선만.</div>
+        </div>
+      </div></div></div>
+      <div class="caption">① 여행 목록 · 타이포 인덱스</div>
+    </div>
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t5">
+        <div class="sb"><span>9:41</span><span class="dots">●●●</span></div>
+        <div class="body">
+          <div class="bignum">강릉 · 2박 3일</div>
+          <div class="display">3<small>일</small></div>
+          <div class="subd">06월 28일 토요일 출발</div>
+          <div class="kv"><span class="k">숙소</span><span class="v">세인트존스 호텔</span></div>
+          <div class="kv"><span class="k">이동</span><span class="v">KTX · 1시간 58분</span></div>
+          <div class="kv"><span class="k">날씨</span><span class="v">맑음 · 24°</span></div>
+          <div class="kv"><span class="k">예약 맛집</span><span class="v blue">5곳</span></div>
+          <div class="kv"><span class="k">자동 생성 일정</span><span class="v blue">12개</span></div>
+          <div class="ctaline"><span>전체 일정 보기</span><span class="ar">→</span></div>
+        </div>
+      </div></div></div>
+      <div class="caption">② 여행 상세 · 디스플레이 숫자</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 BENTO GRID ============ -->
+<section class="concept">
+  <div class="concept-head">
+    <div class="cnum">06</div>
+    <div class="cmeta">
+      <div class="tag">Bento Grid</div>
+      <h2>벤토 그리드</h2>
+      <p>크기가 다른 타일을 모자이크처럼 짜 맞춘 라이트 대시보드. 한 화면에서 정보의 우선순위를 면적으로 보여줍니다.</p>
+      <div class="swatches"><span style="background:#eef0f3"></span><span style="background:#16181d"></span><span style="background:#6366f1"></span><span style="background:#ffffff"></span></div>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t6">
+        <div class="sb"><span>9:41</span><span class="dots">●●●</span></div>
+        <div class="body">
+          <div class="topline"><div class="h">안녕하세요 호창님<small>오늘의 여행 보드</small></div><img class="av" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=70" alt="프로필"></div>
+          <div class="grid">
+            <div class="tile dark row2 tile-flex"><div class="lab-s" style="opacity:.6">다가오는 여행</div><div class="big">강릉<br>바다와 커피</div><div class="cap" style="opacity:.6">D-7 · 2박 3일</div></div>
+            <div class="tile img"><img src="https://images.unsplash.com/photo-1538485399081-7191377e8241?auto=format&fit=crop&w=400&q=70" alt="제주"><div class="ov"></div><div class="lab">제주</div></div>
+            <div class="tile white tile-flex"><div class="kpi">24°</div><div class="cap">강릉 · 맑음</div></div>
+            <div class="tile blue tile-flex"><div class="kpi">12</div><div class="cap" style="opacity:.85">자동 생성 일정</div></div>
+            <div class="tile white tile-flex"><div class="kpi">5</div><div class="cap">예약 맛집</div></div>
+            <div class="tile img span2"><img src="https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?auto=format&fit=crop&w=500&q=70" alt="부산"><div class="ov"></div><div class="lab">부산 미식 위크엔드 · 추천</div></div>
+          </div>
+        </div>
+      </div></div></div>
+      <div class="caption">① 홈 · 벤토 대시보드</div>
+    </div>
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t6">
+        <div class="sb"><span>9:41</span><span class="dots">●●●</span></div>
+        <div class="body">
+          <div class="topline"><div class="h">강릉 상세<small>06.28 – 06.30</small></div></div>
+          <div class="det-big"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=700&q=70" alt="강릉 바다"><div class="ov"></div><div class="cap"><div class="c">강릉</div><div class="s">바다와 커피의 사흘</div></div></div>
+          <div class="grid">
+            <div class="tile white tile-flex"><div class="lab-s">숙소</div><div class="big" style="font-size:14px">세인트존스</div></div>
+            <div class="tile white tile-flex"><div class="lab-s">이동</div><div class="big" style="font-size:14px">KTX 1:58</div></div>
+            <div class="tile blue span2 tile-flex"><div class="lab-s" style="opacity:.85">오늘의 추천</div><div class="big">안목 커피거리 · 도보 5분</div></div>
+            <div class="tile dark tile-flex"><div class="kpi">5</div><div class="cap" style="opacity:.6">맛집</div></div>
+            <div class="tile white tile-flex"><div class="kpi">12</div><div class="cap">일정</div></div>
+          </div>
+        </div>
+      </div></div></div>
+      <div class="caption">② 여행 상세 · 타일 모자이크</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 IMMERSIVE CINEMATIC ============ -->
+<section class="concept">
+  <div class="concept-head">
+    <div class="cnum">07</div>
+    <div class="cmeta">
+      <div class="tag">Immersive Cinematic</div>
+      <h2>이머시브 시네마틱</h2>
+      <p>풀스크린 여행 사진이 화면을 가득 채우고, 하단에서 글래스 시트가 떠오릅니다. 영화 포스터 같은 몰입형 구성.</p>
+      <div class="swatches"><span style="background:#000000"></span><span style="background:#5eead4"></span><span style="background:#ffffff"></span><span style="background:#1a1a1c"></span></div>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t7">
+        <div class="bg"><img src="https://images.unsplash.com/photo-1538485399081-7191377e8241?auto=format&fit=crop&w=700&q=80" alt="제주"><div class="grad"></div></div>
+        <div class="sb"><span>9:41</span><span class="dots">●●●</span></div>
+        <div class="top-cap">
+          <div class="loc">제주 · Jeju Island</div>
+          <h3>바람의<br>섬으로</h3>
+        </div>
+        <div class="sheet">
+          <div class="grip"></div>
+          <div class="lbl">오늘의 추천 코스</div>
+          <div class="row"><img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=200&q=70" alt="카페"><div><div class="rt">월정리 오션뷰 카페</div><div class="rs">해안도로 · 도보 4분</div></div><span class="sc">4.8</span></div>
+          <div class="row"><img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=200&q=70" alt="국수"><div><div class="rt">올레국수</div><div class="rs">고기국수 · 현지인 맛집</div></div><span class="sc">4.9</span></div>
+          <div class="cta">이 코스로 일정 만들기</div>
+        </div>
+      </div></div></div>
+      <div class="caption">① 홈 · 풀스크린 + 글래스 시트</div>
+    </div>
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t7">
+        <div class="bg"><img src="https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?auto=format&fit=crop&w=700&q=80" alt="일출봉"><div class="grad"></div></div>
+        <div class="sb"><span>9:41</span><span class="dots">●●●</span></div>
+        <div class="top-cap">
+          <div class="loc">성산일출봉</div>
+          <h3>해가<br>떠오르는 곳</h3>
+        </div>
+        <div class="stats">
+          <div class="q">"새벽 5시 40분, 바다 끝에서 빛이 차오른다."</div>
+          <div class="grid3">
+            <div class="s"><div class="v">05:42</div><div class="k">일출</div></div>
+            <div class="s"><div class="v">12분</div><div class="k">차로 이동</div></div>
+            <div class="s"><div class="v">4.9</div><div class="k">평점</div></div>
+          </div>
+        </div>
+      </div></div></div>
+      <div class="caption">② 여행지 상세 · 시네마틱 통계</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 NATURE SAGE ============ -->
+<section class="concept">
+  <div class="concept-head">
+    <div class="cnum">08</div>
+    <div class="cmeta">
+      <div class="tag">Nature Sage</div>
+      <h2>네이처 세이지</h2>
+      <p>세이지 그린과 샌드, 크림 톤의 차분한 자연 감성. 유기적인 곡선과 세리프 타이포로 느린 여행의 정서를 담습니다.</p>
+      <div class="swatches"><span style="background:#eef0e6"></span><span style="background:#7c8473"></span><span style="background:#cdd6bf"></span><span style="background:#2c322a"></span></div>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t8">
+        <div class="sb"><span>9:41</span><span class="dots">●●●</span></div>
+        <div class="body">
+          <div class="greet">천천히 떠나는 여행</div>
+          <h3>오늘은 숲과<br>바다 사이에서</h3>
+          <div class="feature">
+            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=700&q=70" alt="숲">
+            <div class="ov"></div>
+            <div class="cap"><span class="badge">이달의 추천</span><div class="city">강릉 솔향수목원</div><div class="meta">숲길 산책 · 2시간 코스</div></div>
+          </div>
+          <div class="lbl">오늘의 여정</div>
+          <div class="leaf"><div class="dot">🌲</div><div><div class="lt">솔향수목원 산책</div><div class="ls">아침 09:00 · 한적한 숲길</div></div><span class="ar">›</span></div>
+          <div class="leaf"><div class="dot">🍵</div><div><div class="lt">한옥 찻집 차담</div><div class="ls">점심 12:30 · 전통차 한 잔</div></div><span class="ar">›</span></div>
+          <div class="leaf"><div class="dot">🌊</div><div><div class="lt">경포 호수 일몰</div><div class="ls">저녁 18:00 · 호숫가 산책</div></div><span class="ar">›</span></div>
+        </div>
+      </div></div></div>
+      <div class="caption">① 홈 · 유기적 자연 톤</div>
+    </div>
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t8">
+        <div class="sb"><span>9:41</span><span class="dots">●●●</span></div>
+        <div class="body">
+          <div class="jhead">여행 일지</div>
+          <div class="jsub">강릉 · 둘째 날의 기록</div>
+          <div class="entry">
+            <div class="date">06.29 · 아침</div>
+            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=600&q=70" alt="커피">
+            <div class="txt">파도 소리에 눈을 떴다. 안목 커피거리에서 <b>드립 한 잔</b>. 호창이 매니저가 추천한 자리에 앉아, 도시에서 잊었던 속도를 천천히 되찾는다.</div>
+          </div>
+          <div class="entry" style="margin-bottom:0">
+            <div class="date">06.29 · 오후</div>
+            <div class="txt">초당 순두부로 점심을 마치고 경포 호수를 한 바퀴. 바람이 결을 따라 분다.</div>
+          </div>
+        </div>
+      </div></div></div>
+      <div class="caption">② 여행 일지 · 세리프 저널</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 09 OCEAN BREEZE ============ -->
+<section class="concept">
+  <div class="concept-head">
+    <div class="cnum">09</div>
+    <div class="cmeta">
+      <div class="tag">Ocean Breeze</div>
+      <h2>오션 브리즈</h2>
+      <p>틸과 아쿠아, 따뜻한 샌드가 어우러진 산뜻한 톤. 가로 스크롤과 가벼운 여백으로 바다처럼 시원한 리듬을 줍니다.</p>
+      <div class="swatches"><span style="background:#14b8a6"></span><span style="background:#e8f6f5"></span><span style="background:#f4f0e6"></span><span style="background:#143d3a"></span></div>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t9">
+        <div class="sb"><span>9:41</span><span class="dots">●●●</span></div>
+        <div class="body">
+          <div class="greet">바다가 부르는 계절</div>
+          <h3>어디로<br>떠나볼까요?</h3>
+          <div class="search"><span class="ic"></span>도시·테마로 검색</div>
+          <div class="scroller">
+            <div class="dest"><img src="https://images.unsplash.com/photo-1535912559178-39785ef84a26?auto=format&fit=crop&w=400&q=70" alt="부산"><div class="dt">부산</div><div class="ds">해운대 · 광안리</div></div>
+            <div class="dest"><img src="https://images.unsplash.com/photo-1538485399081-7191377e8241?auto=format&fit=crop&w=400&q=70" alt="제주"><div class="dt">제주</div><div class="ds">협재 · 우도</div></div>
+            <div class="dest"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400&q=70" alt="강릉"><div class="dt">강릉</div><div class="ds">경포 · 안목</div></div>
+          </div>
+          <div class="lbl">오늘의 추천</div>
+          <div class="wide"><img src="https://images.unsplash.com/photo-1535912559178-39785ef84a26?auto=format&fit=crop&w=300&q=70" alt="해운대"><div class="wt"><div class="n">해운대 해변</div><div class="s">맑은 날의 산책, 야경까지</div><span class="tag">AI 추천 1순위</span></div></div>
+        </div>
+      </div></div></div>
+      <div class="caption">① 홈 · 가로 스크롤 탐색</div>
+    </div>
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t9">
+        <div class="sb"><span>9:41</span><span class="dots">●●●</span></div>
+        <div class="body">
+          <div class="wcard">
+            <div class="loc">부산 · 해운대</div>
+            <div class="temp">26°</div>
+            <div class="cond">맑음 · 바람 약함 · 여행하기 좋아요</div>
+            <div class="days">
+              <div class="d"><div class="dn">오늘</div><div class="ic">☀️</div><div class="dt">26°</div></div>
+              <div class="d"><div class="dn">내일</div><div class="ic">⛅</div><div class="dt">25°</div></div>
+              <div class="d"><div class="dn">토</div><div class="ic">☀️</div><div class="dt">27°</div></div>
+              <div class="d"><div class="dn">일</div><div class="ic">🌤️</div><div class="dt">24°</div></div>
+            </div>
+          </div>
+          <div class="lbl">날씨 맞춤 제안</div>
+          <div class="tip"><div class="e">🏖️</div><div><div class="tt">광안리 해변 산책</div><div class="ts">맑은 오후, 지금이 딱 좋아요</div></div></div>
+          <div class="tip"><div class="e">🌃</div><div><div class="tt">광안대교 야경</div><div class="ts">일몰 19:42 · 차로 12분</div></div></div>
+        </div>
+      </div></div></div>
+      <div class="caption">② 날씨 · 맞춤 제안</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10 TERRACOTTA BOHO ============ -->
+<section class="concept">
+  <div class="concept-head">
+    <div class="cnum">10</div>
+    <div class="cmeta">
+      <div class="tag">Terracotta Boho</div>
+      <h2>테라코타 보호</h2>
+      <p>테라코타와 클레이, 웜 크림의 흙빛 팔레트. 아치 프레임과 가라몬드 세리프로 고급스러운 보헤미안 무드를 냅니다.</p>
+      <div class="swatches"><span style="background:#f3e6d6"></span><span style="background:#b06a45"></span><span style="background:#a85a38"></span><span style="background:#3a2418"></span></div>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t10">
+        <div class="sb"><span>9:41</span><span class="dots">●●●</span></div>
+        <div class="body">
+          <div class="greet">Wander · 호창이 여행매니저</div>
+          <h3>흙빛 골목을<br>거니는 하루</h3>
+          <div class="arch">
+            <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=700&q=70" alt="골목">
+            <div class="ov"></div>
+            <div class="cap"><div class="city">부산 감천문화마을</div><div class="meta">파스텔 골목 · 반나절 코스</div></div>
+          </div>
+          <div class="lbl">오늘의 여정</div>
+          <div class="row"><div class="ico">☕</div><div><div class="rt">골목 로스터리</div><div class="rs">핸드드립 · 도보 3분</div></div><span class="ar">›</span></div>
+          <div class="row"><div class="ico">🎨</div><div><div class="rt">작은 갤러리</div><div class="rs">로컬 작가 전시</div></div><span class="ar">›</span></div>
+          <div class="row"><div class="ico">🌅</div><div><div class="rt">전망 계단</div><div class="rs">노을 명소 · 차로 6분</div></div><span class="ar">›</span></div>
+        </div>
+      </div></div></div>
+      <div class="caption">① 홈 · 아치 프레임</div>
+    </div>
+    <div class="phone-col">
+      <div class="phone"><div class="screen"><div class="scroll t10">
+        <div class="sb"><span>9:41</span><span class="dots">●●●</span></div>
+        <div class="body">
+          <div class="ghead">여행 갤러리</div>
+          <div class="gsub">부산 · 감천에서 담은 장면</div>
+          <div class="gal">
+            <img class="tall" src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=70" alt="골목">
+            <img class="sq" src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=300&q=70" alt="카페">
+            <img class="sq" src="https://images.unsplash.com/photo-1535912559178-39785ef84a26?auto=format&fit=crop&w=300&q=70" alt="해변">
+            <img class="sq" src="https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?auto=format&fit=crop&w=300&q=70" alt="부산">
+            <img class="sq" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=300&q=70" alt="음식">
+          </div>
+          <div class="qbox">"흙빛 골목 사이로 스며든 빛, 오래 기억될 하루."</div>
+        </div>
+      </div></div></div>
+      <div class="caption">② 여행 갤러리 · 보헤미안 모자이크</div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <b>호창이 여행매니저</b> · 디자인 탐색 2026 — 마음에 드는 번호를 알려주세요
+</footer>
+
+</body>
+</html>
