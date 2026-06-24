@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>호창이 여행매니저 · 설치 초대장</title>
+
+  <!-- 카카오톡/SNS 링크 미리보기(Open Graph) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="✈️ 호창이 여행매니저 설치 초대장" />
+  <meta property="og:description" content="여행지 추천부터 일정·동선·가계부까지. 아래에서 기기를 선택해 설치하세요!" />
+  <meta name="theme-color" content="#1565D8" />
+
+  <style>
+    :root {
+      --blue: #1565D8;
+      --blue-dark: #0E47A1;
+      --orange: #FB7A1E;
+      --ink: #1A1C1E;
+      --muted: #5B5F66;
+      --card: #ffffff;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+        "Malgun Gothic", "Noto Sans KR", sans-serif;
+      color: var(--ink);
+      background: linear-gradient(160deg, #1565D8 0%, #2E8BE6 45%, #FB7A1E 130%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+    .card {
+      width: 100%;
+      max-width: 380px;
+      background: var(--card);
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.28);
+      overflow: hidden;
+    }
+    .hero {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+      color: #fff;
+      padding: 32px 24px 26px;
+      text-align: center;
+      position: relative;
+    }
+    .hero .plane { font-size: 46px; line-height: 1; }
+    .hero h1 {
+      margin: 12px 0 4px;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .hero h1 .brand { color: #FFD9B3; }
+    .hero p {
+      margin: 8px 0 0;
+      font-size: 14px;
+      opacity: .94;
+      line-height: 1.5;
+    }
+    .badge {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 999px;
+    }
+    .body { padding: 24px 22px 12px; }
+    .pick-title {
+      text-align: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--muted);
+      margin: 0 0 16px;
+    }
+    .reco {
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--orange);
+      font-weight: 700;
+      margin: -6px 0 14px;
+      min-height: 16px;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      padding: 15px 18px;
+      margin-bottom: 12px;
+      border: none;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform .08s ease, box-shadow .2s ease, opacity .2s;
+      box-shadow: 0 6px 18px rgba(0,0,0,.12);
+    }
+    .btn:active { transform: scale(.98); }
+    .btn .ico { font-size: 24px; width: 26px; text-align: center; }
+    .btn .tx { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.2; }
+    .btn .tx small { font-size: 11.5px; font-weight: 600; opacity: .8; }
+    .btn-android { background: #0B8A3E; color: #fff; }
+    .btn-ios { background: #111316; color: #fff; }
+    .btn.recommended { outline: 3px solid var(--orange); outline-offset: 2px; }
+    .btn[aria-disabled="true"] {
+      background: #E6E8EC; color: #9AA0A6; cursor: not-allowed; box-shadow: none;
+    }
+    .qr-wrap {
+      margin: 8px auto 4px;
+      text-align: center;
+      padding: 16px;
+    }
+    .qr-wrap img {
+      width: 148px; height: 148px;
+      border-radius: 14px;
+      background: #fff;
+      padding: 8px;
+      border: 1px solid #ECEEF1;
+    }
+    .qr-wrap .cap { margin-top: 8px; font-size: 12px; color: var(--muted); }
+    .footer {
+      text-align: center;
+      font-size: 11.5px;
+      color: #9AA0A6;
+      padding: 14px 16px 20px;
+    }
+    .divider { height: 1px; background: #EEF0F3; margin: 4px 22px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="hero">
+      <div class="plane">✈️</div>
+      <h1><span class="brand">호창이</span> 여행매니저</h1>
+      <p>여행지 추천부터 일정·동선·가계부까지<br/>한 곳에서 똑똑하게 ✨</p>
+      <span class="badge">📲 설치 초대장</span>
+    </div>
+
+    <div class="body">
+      <p class="pick-title">기기를 선택해 설치하세요</p>
+      <p class="reco" id="reco"></p>
+
+      <a class="btn btn-android" id="btn-android" href="#" rel="noopener">
+        <span class="ico">🤖</span>
+        <span class="tx">Android 설치<small>Google Play / APK</small></span>
+      </a>
+
+      <a class="btn btn-ios" id="btn-ios" href="#" rel="noopener">
+        <span class="ico">🍎</span>
+        <span class="tx">iPhone 설치<small>App Store / TestFlight</small></span>
+      </a>
+
+      <div class="divider"></div>
+
+      <div class="qr-wrap">
+        <img id="qr" alt="설치 페이지 QR 코드" />
+        <div class="cap">PC에서는 휴대폰으로 QR을 스캔하세요 📷</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      © 호창이 여행매니저 · 즐거운 여행 되세요! 🧳
+    </div>
+  </div>
+
+  <script>
+    /* ===== 배포 후 이 두 값만 채우면 버튼이 활성화됩니다 =====
+       Android: Play 스토어 주소 또는 APK 다운로드 URL
+       iOS:     App Store 주소 또는 TestFlight 초대 URL              */
+    const INSTALL = {
+      android: "https://github.com/hcyang572-gif/hochang-trip-manager/releases/download/v1.0.0/app-release.apk",
+      ios: ""        // 추후 TestFlight 링크 (Mac+Apple 개발자계정 필요)
+    };
+    /* QR이 가리킬 주소. 비우면 현재 페이지 주소를 사용 */
+    const LANDING_URL = "";
+
+    function setupButton(id, url) {
+      const el = document.getElementById(id);
+      if (url) {
+        el.href = url;
+      } else {
+        el.setAttribute("aria-disabled", "true");
+        el.removeAttribute("href");
+        const small = el.querySelector("small");
+        if (small) small.textContent = "출시 준비 중";
+        el.addEventListener("click", (e) => e.preventDefault());
+      }
+    }
+    setupButton("btn-android", INSTALL.android);
+    setupButton("btn-ios", INSTALL.ios);
+
+    // 플랫폼 자동 감지 → 추천 버튼 강조
+    const ua = navigator.userAgent || "";
+    const reco = document.getElementById("reco");
+    if (/android/i.test(ua)) {
+      document.getElementById("btn-android").classList.add("recommended");
+      reco.textContent = "👉 이 기기는 Android 같아요";
+    } else if (/iphone|ipad|ipod/i.test(ua)) {
+      document.getElementById("btn-ios").classList.add("recommended");
+      reco.textContent = "👉 이 기기는 iPhone 같아요";
+    }
+
+    // QR: 설치 페이지 주소를 인코딩
+    const target = LANDING_URL || location.href;
+    document.getElementById("qr").src =
+      "https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&data=" +
+      encodeURIComponent(target);
+  </script>
+</body>
+</html>
